@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phyzigs Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eae4);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 50%;
+            position: relative;
+        }
+        .logo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 80px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input, textarea, select {
+            margin-top: 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png" alt="Phyzigs Logo" class="logo">
+        <h1>Phyzigs Registration Form</h1>
+        <form id="registrationForm">
+            <label for="name">Name (as per official document):</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="fatherName">Father's Name:</label>
+            <input type="text" id="fatherName" name="fatherName" required>
+
+            <label for="motherName">Mother's Name:</label>
+            <input type="text" id="motherName" name="motherName" required>
+
+            <label for="mobile">Mobile No (Student/Guardian):</label>
+            <input type="tel" id="mobile" name="mobile" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="address">Residential Address:</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+
+            <label for="class">Current Class:</label>
+            <input type="text" id="class" name="class" required>
+
+            <label for="school">School/College Name:</label>
+            <input type="text" id="school" name="school" required>
+
+            <label for="board">Board of Education:</label>
+            <input type="text" id="board" name="board" required>
+
+            <label for="result">Previous Exam Result:</label>
+            <input type="text" id="result" name="result" required>
+
+            <label for="subjects">Subjects/Course Interested In:</label>
+            <input type="text" id="subjects" name="subjects" required>
+
+            <label for="emergencyContact">Emergency Contact Person:</label>
+            <input type="text" id="emergencyContact" name="emergencyContact" required>
+
+            <label for="relation">Relation with Student:</label>
+            <input type="text" id="relation" name="relation" required>
+
+            <label for="emergencyMobile">Emergency Contact No:</label>
+            <input type="tel" id="emergencyMobile" name="emergencyMobile" required>
+
+            <button type="button" onclick="sendToWhatsApp()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function sendToWhatsApp() {
+            const form = document.getElementById('registrationForm');
+            const formData = new FormData(form);
+
+            let message = '*Phyzigs Registration Form*\n';
+            formData.forEach((value, key) => {
+                message += `*${key.replace(/_/g, ' ').toUpperCase()}:* ${value}\n`;
+            });
+
+            const whatsappNumber = 'YOUR_WHATSAPP_NUMBER'; // Replace with the WhatsApp number
+            const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
 
