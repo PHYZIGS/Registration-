@@ -3,74 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phyzigs Registration Form</title>
+    <title>PHYZIGS Registration Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eae4);
             margin: 0;
             padding: 0;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
         .container {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             padding: 20px;
             width: 90%;
-            position: relative;
-         
+            max-width: 500px;
         }
-        .logo {
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            max-width: 80px;
             position: absolute;
             top: 10px;
             right: 10px;
-            width: 80px;
         }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        .header h1 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #2193b0;
         }
         form {
             display: flex;
             flex-direction: column;
         }
         label {
+            margin-bottom: 5px;
             font-weight: bold;
-            margin-top: 10px;
         }
-        input, textarea, select {
-            margin-top: 5px;
+        input, select, textarea {
             padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
         }
         button {
-            margin-top: 20px;
+            background: #2193b0;
+            color: #fff;
             padding: 10px;
-            background: #4CAF50;
-            color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 1em;
         }
         button:hover {
-            background: #45a049;
+            background: #17678a;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="logo.png" alt="Phyzigs Logo" class="logo">
-        <h1>Phyzigs Registration Form</h1>
+        <div class="header">
+            <h1>PHYZIGS Registration Form</h1>
+            <img src="logo.png" alt="Logo">
+        </div>
         <form id="registrationForm">
             <label for="name">Name (as per official document):</label>
             <input type="text" id="name" name="name" required>
@@ -79,7 +83,8 @@
             <input type="date" id="dob" name="dob" required>
 
             <label for="gender">Gender:</label>
-            <select id="gender" name="gender">
+            <select id="gender" name="gender" required>
+                <option value="">Select</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
@@ -100,50 +105,68 @@
             <label for="address">Residential Address:</label>
             <textarea id="address" name="address" rows="3" required></textarea>
 
-            <label for="class">Current Class:</label>
-            <input type="text" id="class" name="class" required>
+            <label for="currentClass">Current Class:</label>
+            <input type="text" id="currentClass" name="currentClass" required>
 
             <label for="school">School/College Name:</label>
             <input type="text" id="school" name="school" required>
 
-            <label for="board">Board of Education:</label>
+            <label for="board">Board of Education (CBSE/ICSE/State Board):</label>
             <input type="text" id="board" name="board" required>
-
-            <label for="result">Previous Exam Result:</label>
-            <input type="text" id="result" name="result" required>
 
             <label for="subjects">Subjects/Course Interested In:</label>
             <input type="text" id="subjects" name="subjects" required>
 
-            <label for="emergencyContact">Emergency Contact Person:</label>
+            <label for="emergencyContact">Emergency Contact Name:</label>
             <input type="text" id="emergencyContact" name="emergencyContact" required>
 
             <label for="relation">Relation with Student:</label>
             <input type="text" id="relation" name="relation" required>
 
-            <label for="emergencyMobile">Emergency Contact No:</label>
-            <input type="tel" id="emergencyMobile" name="emergencyMobile" required>
+            <label for="emergencyNumber">Emergency Contact Number:</label>
+            <input type="tel" id="emergencyNumber" name="emergencyNumber" required>
 
-            <button type="button" onclick="sendToWhatsApp()">Submit</button>
+            <label for="knowAbout">How did you know about us?</label>
+            <input type="text" id="knowAbout" name="knowAbout" required>
+
+            <label for="requirements">Any Special Requirements:</label>
+            <textarea id="requirements" name="requirements" rows="3"></textarea>
+
+            <button type="button" onclick="sendWhatsAppMessage()">Submit</button>
         </form>
     </div>
 
     <script>
-        function sendToWhatsApp() {
+        function sendWhatsAppMessage() {
             const form = document.getElementById('registrationForm');
             const formData = new FormData(form);
-
-            let message = '*Phyzigs Registration Form*\n';
+            const data = {};
             formData.forEach((value, key) => {
-                message += `*${key.replace(/_/g, ' ').toUpperCase()}:* ${value}\n`;
+                data[key] = value;
             });
 
-            const whatsappNumber = 'YOUR_WHATSAPP_NUMBER'; // Replace with the WhatsApp number
-            const url = `https://wa.me/${+917077113049}?text=${encodeURIComponent(message)}`;
+            const message = `Name: ${data.name}%0A` +
+                `DOB: ${data.dob}%0A` +
+                `Gender: ${data.gender}%0A` +
+                `Father's Name: ${data.fatherName}%0A` +
+                `Mother's Name: ${data.motherName}%0A` +
+                `Mobile: ${data.mobile}%0A` +
+                `Email: ${data.email}%0A` +
+                `Address: ${data.address}%0A` +
+                `Current Class: ${data.currentClass}%0A` +
+                `School: ${data.school}%0A` +
+                `Board: ${data.board}%0A` +
+                `Subjects: ${data.subjects}%0A` +
+                `Emergency Contact: ${data.emergencyContact}%0A` +
+                `Relation: ${data.relation}%0A` +
+                `Emergency Number: ${data.emergencyNumber}%0A` +
+                `How Did You Know: ${data.knowAbout}%0A` +
+                `Special Requirements: ${data.requirements}`;
 
+            const phoneNumber = 'YOUR_WHATSAPP_NUMBER';
+            const url = `https://wa.me/${+917735199375}?text=${message}`;
             window.open(url, '_blank');
         }
     </script>
 </body>
 </html>
-
